@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cépage — grape characteristics chart</title>
+<meta name="description" content="Bubble chart plotting grape varieties by body, acidity, sweetness, and tannin for WSET Level 3 study.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.1.0/iconfont/tabler-icons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="topbar">
+    <div class="brand">
+      <i class="ti ti-grape" aria-hidden="true"></i>
+      <span class="brand-name">Cépage</span>
+    </div>
+    <nav class="topbar-nav">
+      <a href="index.html" class="nav-link">Drill</a>
+      <a href="chart.html" class="nav-link active">Chart</a>
+    </nav>
+  </header>
+
+  <main role="main">
+    <h1 class="sr-only">Cépage — bubble chart plotting grape varieties by body and acidity, with bubble size showing sweetness and, for reds, border thickness showing tannin</h1>
+
+    <div class="chart-intro">
+      <h2>Body, acidity, sweetness — at a glance.</h2>
+      <p>Position shows body (x) and acidity (y). Bubble size shows sweetness. Color groups grapes by fruit family. Hover any bubble for exact values.</p>
+    </div>
+
+    <div class="chart-toggle">
+      <button id="btn-whites" class="toggle-btn active">White grapes</button>
+      <button id="btn-reds" class="toggle-btn">Red grapes</button>
+    </div>
+
+    <div class="chart-card">
+      <div style="position:relative; width:100%; height:440px;">
+        <canvas id="grapeChart" role="img" aria-label="Bubble chart of grape varieties plotted by body on the x-axis and acidity on the y-axis, bubble size showing sweetness, color showing fruit family">White and red grape varieties plotted by body and acidity, sized by sweetness.</canvas>
+      </div>
+
+      <div id="legend" class="chart-legend"></div>
+
+      <div class="chart-footnote">
+        <span class="footnote-item">
+          <span class="size-demo">
+            <span class="size-dot small"></span>
+            <span class="size-dot large"></span>
+          </span>
+          Bubble size = sweetness
+        </span>
+        <span id="tannin-legend" class="footnote-item" style="display:none;">
+          <span class="tannin-demo"></span>
+          Border thickness = tannin
+        </span>
+      </div>
+    </div>
+
+    <div class="chart-caveat">
+      <i class="ti ti-info-circle" aria-hidden="true"></i>
+      <p>Positions are calibrated from WSET's standard descriptive bands (light to pronounced), not a single numeric source. Relative position between grapes is more reliable than exact coordinates. A few grapes appear twice where style materially changes the profile — oaked vs. unoaked Chardonnay, dry vs. sweet Chenin Blanc and Sémillon, cool vs. warm-climate Syrah.</p>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p>Built for WSET&nbsp;Level&nbsp;3 prep. Not affiliated with WSET&reg;.</p>
+  </footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="grapes-data.js"></script>
+<script src="chart.js"></script>
+</body>
+</html>
