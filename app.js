@@ -172,12 +172,29 @@
       reviewHtml = `<p class="clean-sweep">Clean sweep &mdash; nothing to review.</p>`;
     }
 
+    // Leaderboard submit block — only shown if Supabase support is present on the page.
+    const lbAvailable = typeof submitScore === 'function';
+    const savedName = (function () {
+      try { return localStorage.getItem('cepage_name') || ''; } catch (e) { return ''; }
+    })();
+    const lbHtml = lbAvailable ? `
+      <div class="lb-submit" id="lb-submit">
+        <div class="lb-submit-label">Post to the leaderboard</div>
+        <div class="lb-submit-row">
+          <input type="text" id="lb-name" class="lb-input" placeholder="Your name" maxlength="24" value="${savedName.replace(/"/g, '&quot;')}" autocomplete="off">
+          <button class="next-btn" id="lb-submit-btn">Submit</button>
+        </div>
+        <div class="lb-submit-status" id="lb-status"></div>
+      </div>
+    ` : '';
+
     app.innerHTML = `
       <div class="results">
         <div class="results-label">Drill complete</div>
         <div class="results-score">${score} / ${order.length}</div>
         <div class="results-pct">${pct}% correct</div>
       </div>
+      ${lbHtml}
       <div style="text-align:left;">${reviewHtml}</div>
       <div class="results-actions">
         <button class="start-btn" id="retry-btn">Drill again</button>
@@ -187,6 +204,39 @@
 
     document.getElementById('retry-btn').onclick = startDrill;
     document.getElementById('home-btn').onclick = renderIntro;
+
+    if (lbAvailable) wireLeaderboardSubmit();
+  }
+
+  function wireLeaderboardSubmit() {
+    const btn = document.getElementById('lb-submit-btn');
+    const input = document.getElementById('lb-name');
+    const status = document.getElementById('lb-status');
+    if (!btn || !input) return;
+
+    btn.onclick = async () => {
+      const name = input.value.trim();
+      if (!name) {
+        status.textContent = 'Enter a name first.';
+        status.className = 'lb-submit-status error';
+        return;
+      }
+      try { localStorage.setItem('cepage_name', name); } catch (e) {}
+      btn.disabled = true;
+      status.textContent = 'Submitting\u2026';
+      status.className = 'lb-submit-status';
+
+      const ok = await submitScore(name, score, order.length, mode);
+      if (ok) {
+        status.innerHTML = 'Posted. <a href="leaderboard.html">See the leaderboard &rarr;</a>';
+        status.className = 'lb-submit-status success';
+        input.disabled = true;
+      } else {
+        status.textContent = "Couldn't submit \u2014 check the leaderboard setup, or try again.";
+        status.className = 'lb-submit-status error';
+        btn.disabled = false;
+      }
+    };
   }
 
   renderIntro();

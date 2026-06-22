@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cépage — WSET 3 aroma drill</title>
-<meta name="description" content="Drill aroma descriptors against grape varieties for WSET Level 3 exam prep.">
+<title>Cépage — leaderboard</title>
+<meta name="description" content="Top WSET Level 3 aroma drill scores from the last 24 hours.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -21,16 +21,25 @@
       <span class="brand-name">Cépage</span>
     </div>
     <nav class="topbar-nav">
-      <a href="index.html" class="nav-link active">Drill</a>
+      <a href="index.html" class="nav-link">Drill</a>
       <a href="theory.html" class="nav-link">Theory</a>
       <a href="chart.html" class="nav-link">Chart</a>
-      <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+      <a href="leaderboard.html" class="nav-link active">Leaderboard</a>
     </nav>
   </header>
 
   <main role="main">
-    <h1 class="sr-only">Cépage — interactive drill matching aroma descriptors to grape varieties for WSET Level 3 exam preparation</h1>
-    <div id="app"></div>
+    <h1 class="sr-only">Cépage leaderboard — top aroma drill scores from the last 24 hours</h1>
+
+    <div class="lb-intro">
+      <h2>Last 24 hours.</h2>
+      <p>Best score per taster, highest percentage first. Scores roll off after a day, so the board resets daily.</p>
+    </div>
+
+    <div id="lb-content" class="lb-content">
+      <div class="lb-loading">Loading scores&hellip;</div>
+    </div>
+
   </main>
 
   <footer class="footer">
@@ -41,7 +50,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
-<script src="data.js"></script>
-<script src="app.js"></script>
+<script src="leaderboard.js"></script>
 </body>
 </html>

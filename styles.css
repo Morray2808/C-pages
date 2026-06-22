@@ -49,8 +49,15 @@ html, body {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 16px;
   padding: 28px 0 20px;
   border-bottom: 1px solid var(--line);
+}
+
+@media (max-width: 460px) {
+  .topbar-nav { gap: 14px; }
+  .nav-link { font-size: 12.5px; }
 }
 
 .brand {
@@ -573,6 +580,249 @@ html, body {
   line-height: 1.55;
   color: var(--ink-soft);
   margin: 0;
+}
+
+/* ---------- leaderboard submit (results screen) ---------- */
+
+.lb-submit {
+  background: var(--parchment-card);
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+}
+
+.lb-submit-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: var(--cork);
+  margin-bottom: 10px;
+}
+
+.lb-submit-row {
+  display: flex;
+  gap: 8px;
+}
+
+.lb-input {
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--parchment);
+}
+
+.lb-input:focus {
+  outline: 2px solid var(--garnet);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.lb-input:disabled { opacity: 0.6; }
+
+.lb-submit-status {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 10px;
+  min-height: 18px;
+}
+
+.lb-submit-status.success { color: var(--success); }
+.lb-submit-status.error { color: var(--danger); }
+.lb-submit-status a { color: var(--garnet); font-weight: 600; }
+
+/* ---------- leaderboard page ---------- */
+
+.lb-intro { padding: 32px 0 4px; }
+
+.lb-intro h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 24px;
+  margin: 0 0 8px;
+}
+
+.lb-intro p {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+
+.lb-loading {
+  text-align: center;
+  padding: 48px 0;
+  color: var(--cork);
+  font-size: 14px;
+}
+
+.lb-empty {
+  text-align: center;
+  padding: 44px 24px;
+  background: var(--parchment-card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.lb-empty i {
+  font-size: 28px;
+  color: var(--cork);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.lb-empty p {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin: 0 auto 14px;
+  max-width: 360px;
+}
+
+.lb-empty a { color: var(--garnet); font-weight: 600; }
+.lb-empty code {
+  background: var(--garnet-light);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.lb-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lb-row {
+  display: grid;
+  grid-template-columns: 32px 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  background: var(--parchment-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.lb-rank {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--cork);
+  text-align: center;
+}
+
+.lb-row.lb-gold .lb-rank { color: #B8860B; }
+.lb-row.lb-silver .lb-rank { color: #8C8C8C; }
+.lb-row.lb-bronze .lb-rank { color: #A9703E; }
+
+.lb-row.lb-gold { border-color: #E4C97E; }
+
+.lb-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lb-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.lb-mode {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cork);
+}
+
+.lb-time {
+  font-size: 11px;
+  color: var(--cork);
+}
+
+.lb-score {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--garnet);
+  min-width: 52px;
+  text-align: right;
+}
+
+.lb-total {
+  font-size: 13px;
+  color: var(--cork);
+  font-weight: 400;
+}
+
+/* ---------- theory quiz ---------- */
+
+.theory-q {
+  font-family: var(--font-display);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--ink);
+  margin: 0;
+}
+
+.options-grid-1 {
+  grid-template-columns: 1fr;
+}
+
+.review-why {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.weak-summary {
+  margin-bottom: 22px;
+}
+
+.weak-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.weak-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--garnet-light);
+  color: var(--garnet);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.weak-count {
+  background: var(--garnet);
+  color: #fff;
+  font-size: 11px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ---------- footer ---------- */
