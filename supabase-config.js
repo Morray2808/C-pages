@@ -13,7 +13,7 @@
 // ─────────────────────────────────────────────────────────────
 
 const SUPABASE_URL = "https://hdlgzapyzcxastndaegv.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_snELAGoA8E1uawttuMbR2w_T8MmiD4E";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhkbGd6YXB5emN4YXN0bmRhZWd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyODkxMzIsImV4cCI6MjA5Nzg2NTEzMn0.dSSLuJKg0TSv_KRSETAByPDX68MpM8GlLtSis0CcGkE";
 
 // How long a score stays on the leaderboard, in hours.
 const LEADERBOARD_WINDOW_HOURS = 24;
