@@ -12,8 +12,8 @@
 //  See README for the exact SQL to run.
 // ─────────────────────────────────────────────────────────────
 
-const SUPABASE_URL = "YOUR_PROJECT_URL_HERE";
-const SUPABASE_ANON_KEY = "YOUR_ANON_PUBLIC_KEY_HERE";
+const SUPABASE_URL = "https://hdlgzapyzcxastndaegv.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_snELAGoA8E1uawttuMbR2w_T8MmiD4E";
 
 // How long a score stays on the leaderboard, in hours.
 const LEADERBOARD_WINDOW_HOURS = 24;
