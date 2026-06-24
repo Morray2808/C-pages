@@ -226,7 +226,7 @@
       status.textContent = 'Submitting\u2026';
       status.className = 'lb-submit-status';
 
-      const ok = await submitScore(name, score, order.length, mode);
+      const ok = await submitScore(name, score, order.length, mode, 'drill');
       if (ok) {
         status.innerHTML = 'Posted. <a href="leaderboard.html">See the leaderboard &rarr;</a>';
         status.className = 'lb-submit-status success';

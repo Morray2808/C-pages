@@ -34,16 +34,17 @@ function getSupabase() {
   return _supabaseClient;
 }
 
-// Submit a score. Returns true on success, false on failure.
-async function submitScore(name, score, total, mode) {
+// Submit a score. `quiz` is 'drill' or 'theory'. Returns true on success.
+async function submitScore(name, score, total, mode, quiz) {
   const client = getSupabase();
   if (!client) return false;
   const trimmed = (name || "").trim().slice(0, 24);
   if (!trimmed) return false;
+  const quizType = quiz === "theory" ? "theory" : "drill";
   try {
     const { error } = await client
       .from("scores")
-      .insert([{ name: trimmed, score: score, total: total, mode: mode }]);
+      .insert([{ name: trimmed, score: score, total: total, mode: mode, quiz: quizType }]);
     if (error) { console.error("submitScore error:", error); return false; }
     return true;
   } catch (e) {
@@ -52,9 +53,11 @@ async function submitScore(name, score, total, mode) {
   }
 }
 
-// Fetch leaderboard: best score per name within the time window.
-// Returns an array of { name, score, total, mode, created_at } sorted best-first,
-// or null on error (so the UI can distinguish "no scores" from "couldn't load").
+// Fetch leaderboard grouped by person, with best drill % and best theory %
+// within the time window, plus their average. Returns an array of
+// { name, drill, theory, average } sorted by average (best first), where
+// drill/theory are percentages (0-100) or null if not attempted.
+// Returns null on error so the UI can tell "no scores" from "couldn't load".
 async function fetchLeaderboard() {
   const client = getSupabase();
   if (!client) return null;
@@ -62,26 +65,31 @@ async function fetchLeaderboard() {
   try {
     const { data, error } = await client
       .from("scores")
-      .select("name, score, total, mode, created_at")
-      .gte("created_at", sinceIso)
-      .order("created_at", { ascending: false });
+      .select("name, score, total, quiz, created_at")
+      .gte("created_at", sinceIso);
     if (error) { console.error("fetchLeaderboard error:", error); return null; }
 
-    // Reduce to best score per name. "Best" = highest percentage, then highest raw score.
-    const bestByName = new Map();
+    // For each name, track the best percentage in each quiz type.
+    const byName = new Map();
     for (const row of data) {
-      const pct = row.total > 0 ? row.score / row.total : 0;
-      const existing = bestByName.get(row.name);
-      if (!existing) {
-        bestByName.set(row.name, { ...row, pct });
-      } else if (pct > existing.pct || (pct === existing.pct && row.score > existing.score)) {
-        bestByName.set(row.name, { ...row, pct });
-      }
+      const pct = row.total > 0 ? (row.score / row.total) * 100 : 0;
+      const quiz = row.quiz === "theory" ? "theory" : "drill";
+      if (!byName.has(row.name)) byName.set(row.name, { name: row.name, drill: null, theory: null });
+      const entry = byName.get(row.name);
+      if (entry[quiz] === null || pct > entry[quiz]) entry[quiz] = pct;
     }
-    return [...bestByName.values()].sort((a, b) => {
-      if (b.pct !== a.pct) return b.pct - a.pct;
-      return b.score - a.score;
+
+    // Compute the average across whichever types each person has attempted.
+    const rows = [...byName.values()].map(e => {
+      const parts = [];
+      if (e.drill !== null) parts.push(e.drill);
+      if (e.theory !== null) parts.push(e.theory);
+      const average = parts.length ? parts.reduce((a, b) => a + b, 0) / parts.length : 0;
+      return { ...e, average };
     });
+
+    rows.sort((a, b) => b.average - a.average);
+    return rows;
   } catch (e) {
     console.error("fetchLeaderboard exception:", e);
     return null;

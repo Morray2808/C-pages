@@ -692,6 +692,22 @@ html, body {
   font-size: 13px;
 }
 
+.lb-head {
+  display: grid;
+  grid-template-columns: 32px 1fr 56px 56px 56px;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cork);
+}
+
+.lb-h-col { text-align: right; }
+.lb-h-avg { color: var(--garnet); }
+
 .lb-list {
   list-style: none;
   margin: 0;
@@ -709,6 +725,27 @@ html, body {
   border-radius: 10px;
   margin-bottom: 8px;
 }
+
+.lb-row-4 {
+  grid-template-columns: 32px 1fr 56px 56px 56px;
+  gap: 10px;
+}
+
+.lb-col {
+  text-align: right;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.lb-col-avg {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--garnet);
+}
+
+.lb-dash { color: var(--line); }
 
 .lb-rank {
   font-family: var(--font-display);
