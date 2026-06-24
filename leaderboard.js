@@ -13,28 +13,37 @@
     return hrs + 'h ago';
   }
 
+  function fmtPct(v) {
+    return v === null ? '<span class="lb-dash">&ndash;</span>' : Math.round(v) + '%';
+  }
+
   function renderRows(rows) {
     if (!rows.length) {
       content.innerHTML = `
         <div class="lb-empty">
           <i class="ti ti-glass" aria-hidden="true"></i>
-          <p>No scores yet today. Be the first &mdash; head to the <a href="index.html">drill</a>.</p>
+          <p>No scores yet today. Be the first &mdash; try the <a href="index.html">drill</a> or the <a href="theory.html">theory quiz</a>.</p>
         </div>`;
       return;
     }
 
     const medals = ['lb-gold', 'lb-silver', 'lb-bronze'];
     content.innerHTML = `
+      <div class="lb-head">
+        <span class="lb-h-rank"></span>
+        <span class="lb-h-name">Taster</span>
+        <span class="lb-h-col">Drill</span>
+        <span class="lb-h-col">Theory</span>
+        <span class="lb-h-col lb-h-avg">Avg</span>
+      </div>
       <ol class="lb-list">
         ${rows.map((r, i) => `
-          <li class="lb-row ${i < 3 ? medals[i] : ''}">
+          <li class="lb-row lb-row-4 ${i < 3 ? medals[i] : ''}">
             <span class="lb-rank">${i + 1}</span>
             <span class="lb-name">${escapeHtml(r.name)}</span>
-            <span class="lb-meta">
-              <span class="lb-mode">${r.mode === 'quick' ? 'Quick' : 'Full'}</span>
-              <span class="lb-time">${timeAgo(r.created_at)}</span>
-            </span>
-            <span class="lb-score">${r.score}<span class="lb-total">/${r.total}</span></span>
+            <span class="lb-col">${fmtPct(r.drill)}</span>
+            <span class="lb-col">${fmtPct(r.theory)}</span>
+            <span class="lb-col lb-col-avg">${Math.round(r.average)}%</span>
           </li>
         `).join('')}
       </ol>`;
